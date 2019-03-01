@@ -38,7 +38,21 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!--Maven Release Plugin-->
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <goal>install</goal>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
+            </plugin>-->
         </plugins>
     </build>
+
+    <!--Maven Release Plugin-->
+    <!--<scm>
+        <developerConnection>scm:git:github.com/archit-chandra/sf5g-pet-clinic.git</developerConnection>
+    </scm>-->
 
 </project>

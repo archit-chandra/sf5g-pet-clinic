@@ -3,9 +3,9 @@ package com.gemalto.petclinic.services.map;
 import java.util.Set;
 
 import com.gemalto.petclinic.models.Owner;
-import com.gemalto.petclinic.services.CrudService;
+import com.gemalto.petclinic.services.OwnerService;
 
-public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements CrudService<Owner, Long> {
+public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
 
     @Override
     public Set<Owner> findAll() {
@@ -30,5 +30,11 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
     @Override
     public void delete(Owner owner) {
         super.delete(owner);
+    }
+
+    @Override
+    public Owner findByLastName(String lastName) {
+        // TODO: implement findByLastName method in this class or its super class
+        return null;
     }
 }

@@ -3,9 +3,9 @@ package com.gemalto.petclinic.services.map;
 import java.util.Set;
 
 import com.gemalto.petclinic.models.Vet;
-import com.gemalto.petclinic.services.CrudService;
+import com.gemalto.petclinic.services.VetService;
 
-public class VetServiceMap extends AbstractMapService<Vet, Long> implements CrudService<Vet, Long> {
+public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
 
     @Override
     public Set<Vet> findAll() {

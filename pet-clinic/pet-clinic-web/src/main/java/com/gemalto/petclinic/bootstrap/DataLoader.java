@@ -1,5 +1,6 @@
 package com.gemalto.petclinic.bootstrap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -7,8 +8,6 @@ import com.gemalto.petclinic.models.Owner;
 import com.gemalto.petclinic.models.Vet;
 import com.gemalto.petclinic.services.OwnerService;
 import com.gemalto.petclinic.services.VetService;
-import com.gemalto.petclinic.services.map.OwnerServiceMap;
-import com.gemalto.petclinic.services.map.VetServiceMap;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -16,9 +15,10 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
 
-    public DataLoader() {
-        ownerService = new OwnerServiceMap();
-        vetService = new VetServiceMap();
+    @Autowired
+    public DataLoader(OwnerService ownerService, VetService vetService) {
+        this.ownerService = ownerService;
+        this.vetService = vetService;
     }
 
     @Override

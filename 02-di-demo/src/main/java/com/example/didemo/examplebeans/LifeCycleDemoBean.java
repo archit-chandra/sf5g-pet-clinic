@@ -1,4 +1,4 @@
-package com.example.didemo;
+package com.example.didemo.examplebeans;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

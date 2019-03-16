@@ -1,0 +1,36 @@
+# this is a comment
+
+name: John
+
+# Array of names
+names:
+  - John # Comment can come here also
+  - Paul
+  - Ringo
+
+pound_sign: "#"
+
+book:
+  author: Joe Buck
+  publisher: random house
+
+
+truth: yes
+another_truth: True
+more_truth: true
+
+false: no #No, false, FALSE
+
+string_val: "This is it's quote"
+colon_string: "my course: one, two, three"
+
+include_new_lines: |
+  asdf mmmm
+  vvv ddd
+  vv
+  bb
+
+ignore_new_lines: >
+  this is just
+  one long
+  string

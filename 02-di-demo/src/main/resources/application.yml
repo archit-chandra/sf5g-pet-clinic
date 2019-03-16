@@ -3,3 +3,12 @@ guru:
     username: JMS YML Username
     password: JMS YML Password
     url: http://www.guru-jms-yml.com
+
+
+
+# File Separator (---), so no need to create different file like application-es.properties
+---
+
+guru:
+  jms:
+    username: JMS YML Username - In Spanish

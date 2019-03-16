@@ -1,0 +1,5 @@
+guru:
+  jms:
+    username: JMS YML Username
+    password: JMS YML Password
+    url: http://www.guru-jms-yml.com

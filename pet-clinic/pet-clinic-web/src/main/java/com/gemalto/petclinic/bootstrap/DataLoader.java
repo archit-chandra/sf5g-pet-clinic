@@ -9,9 +9,11 @@ import org.springframework.stereotype.Component;
 import com.gemalto.petclinic.models.Owner;
 import com.gemalto.petclinic.models.Pet;
 import com.gemalto.petclinic.models.PetType;
+import com.gemalto.petclinic.models.Speciality;
 import com.gemalto.petclinic.models.Vet;
 import com.gemalto.petclinic.services.OwnerService;
 import com.gemalto.petclinic.services.PetTypeService;
+import com.gemalto.petclinic.services.SpecialityService;
 import com.gemalto.petclinic.services.VetService;
 
 @Component
@@ -20,17 +22,21 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialityService specialityService;
 
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService,
+                      PetTypeService petTypeService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
+        /////////////// Pet types ////////////////////////////
         PetType dog = new PetType();
         dog.setName("Dog");
         PetType savedDogPetType = petTypeService.save(dog);
@@ -38,6 +44,21 @@ public class DataLoader implements CommandLineRunner {
         PetType cat = new PetType();
         cat.setName("Cat");
         PetType savedCatPetType = petTypeService.save(cat);
+        /////////////// Pet types - end //////////////////////
+
+        /////////////// Specialities ////////////////////////////
+        Speciality radiology = new Speciality();
+        radiology.setDescription("Radiology");
+        Speciality savedRadiology = specialityService.save(radiology);
+
+        Speciality surgery = new Speciality();
+        surgery.setDescription("Surgery");
+        Speciality savedSurgery = specialityService.save(surgery);
+
+        Speciality dentistry = new Speciality();
+        dentistry.setDescription("Dentistry");
+        Speciality savedDentistry = specialityService.save(dentistry);
+        /////////////// Specialities - end //////////////////////
 
         Owner owner1 = new Owner("Michael", "Weston");
         owner1.setAddress("123 Brickerel");

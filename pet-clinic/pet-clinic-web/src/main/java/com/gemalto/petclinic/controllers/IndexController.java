@@ -15,4 +15,9 @@ public class IndexController {
     public String showComingSoon() {
         return "comingsoon";
     }
+
+    @GetMapping("/vets.html")
+    public String showVetIndex() {
+        return "redirect:vets/index";
+    }
 }

@@ -1,10 +1,13 @@
 package com.gemalto.petclinic.bootstrap;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.gemalto.petclinic.models.Owner;
+import com.gemalto.petclinic.models.Pet;
 import com.gemalto.petclinic.models.PetType;
 import com.gemalto.petclinic.models.Vet;
 import com.gemalto.petclinic.services.OwnerService;
@@ -40,13 +43,19 @@ public class DataLoader implements CommandLineRunner {
         owner1.setAddress("123 Brickerel");
         owner1.setCity("New York");
         owner1.setTelephone("1234567890");
-        ownerService.save(owner1);
+
+        Pet mikesPet = new Pet();
+        mikesPet.setName("Rosco");
+        addPetsToOwners(owner1, savedDogPetType, mikesPet);
 
         Owner owner2 = new Owner("Fionna", "Glenanne");
         owner2.setAddress("Paul Valinterre");
         owner2.setCity("Paris");
         owner2.setTelephone("7510532040");
-        ownerService.save(owner2);
+
+        Pet fionanPet = new Pet();
+        fionanPet.setName("Jackie");
+        addPetsToOwners(owner2, savedCatPetType, fionanPet);
 
         System.out.println("========>>>> Loaded Owners");
 
@@ -57,5 +66,13 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet2);
 
         System.out.println("========>>>> Loaded Vets");
+    }
+
+    private void addPetsToOwners(Owner owner, PetType petType, Pet pet) {
+        pet.setPetType(petType);
+        pet.setOwner(owner);
+        pet.setBirthDate(LocalDate.now());
+        owner.getPets().add(pet);
+        ownerService.save(owner);
     }
 }

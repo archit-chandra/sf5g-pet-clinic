@@ -35,6 +35,10 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        loadData();
+    }
+
+    private void loadData() {
 
         /////////////// Pet types ////////////////////////////
         PetType dog = new PetType();
@@ -74,9 +78,9 @@ public class DataLoader implements CommandLineRunner {
         owner2.setCity("Paris");
         owner2.setTelephone("7510532040");
 
-        Pet fionanPet = new Pet();
-        fionanPet.setName("Jackie");
-        addPetsToOwners(owner2, savedCatPetType, fionanPet);
+        Pet fionnaPet = new Pet();
+        fionnaPet.setName("Jackie");
+        addPetsToOwners(owner2, savedCatPetType, fionnaPet);
 
         System.out.println("========>>>> Loaded Owners");
 

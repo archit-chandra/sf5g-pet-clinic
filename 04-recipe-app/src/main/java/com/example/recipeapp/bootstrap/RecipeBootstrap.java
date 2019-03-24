@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+
 import com.example.recipeapp.domain.Category;
 import com.example.recipeapp.domain.Difficulty;
 import com.example.recipeapp.domain.Ingredient;
@@ -15,7 +18,7 @@ import com.example.recipeapp.repositories.CategoryRepository;
 import com.example.recipeapp.repositories.RecipeRepository;
 import com.example.recipeapp.repositories.UnitOfMeasureRepository;
 
-public class RecipeBootstrap {
+public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
     private final RecipeRepository recipeRepository;
@@ -28,6 +31,10 @@ public class RecipeBootstrap {
         this.unitOfMeasureRepository = unitOfMeasureRepository;
     }
 
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        recipeRepository.saveAll(getRecipies());
+    }
 
     private List<Recipe> getRecipies() {
         List<Recipe> recipes = new ArrayList<>(2);

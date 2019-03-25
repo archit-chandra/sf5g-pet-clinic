@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
 import com.example.recipeapp.domain.Category;
 import com.example.recipeapp.domain.Difficulty;
@@ -18,6 +19,7 @@ import com.example.recipeapp.repositories.CategoryRepository;
 import com.example.recipeapp.repositories.RecipeRepository;
 import com.example.recipeapp.repositories.UnitOfMeasureRepository;
 
+@Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;

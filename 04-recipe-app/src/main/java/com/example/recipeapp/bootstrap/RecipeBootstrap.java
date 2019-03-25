@@ -63,13 +63,12 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         Notes guacNotes = new Notes();
         guacNotes.setRecipeNotes("Guac Recipe Notes....");
-        guacNotes.setRecipe(guacRecipe);
         guacRecipe.setNotes(guacNotes);
 
-        guacRecipe.getIngredients().add(new Ingredient("Ripe avacados", new BigDecimal(2), eachUom, guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(5), teaSpoonUom, guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("Freash lime juice", new BigDecimal(2), tableSpoonUom, guacRecipe));
-        guacRecipe.getIngredients().add(new Ingredient("Ripe tomatoes", new BigDecimal(".5"), eachUom, guacRecipe));
+        guacRecipe.addIngredient(new Ingredient("Ripe avacados", new BigDecimal(2), eachUom));
+        guacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(5), teaSpoonUom));
+        guacRecipe.addIngredient(new Ingredient("Freash lime juice", new BigDecimal(2), tableSpoonUom));
+        guacRecipe.addIngredient(new Ingredient("Ripe tomatoes", new BigDecimal(".5"), eachUom));
 
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
@@ -84,11 +83,10 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         Notes tacosNotes = new Notes();
         tacosNotes.setRecipeNotes("Tacos Recipe Notes...");
-        tacosNotes.setRecipe(tacosRecipe);
         tacosRecipe.setNotes(tacosNotes);
 
-        tacosRecipe.getIngredients().add(new Ingredient("Ripe avacados", new BigDecimal(2), eachUom, guacRecipe));
-        tacosRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(5), teaSpoonUom, guacRecipe));
+        tacosRecipe.addIngredient(new Ingredient("Ripe avacados", new BigDecimal(2), eachUom));
+        tacosRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(5), teaSpoonUom));
 
         tacosRecipe.getCategories().add(mexicanCategory);
 
@@ -100,7 +98,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private Category findAndValidateCategoryByDescription(String description) {
         Optional<Category> categoryOptional = categoryRepository.findByDescription(description);
         if (!categoryOptional.isPresent()) {
-            throw new RuntimeException("Expected UOM is not found");
+            throw new RuntimeException("Expected Category is not found");
         } else {
             return categoryOptional.get();
         }

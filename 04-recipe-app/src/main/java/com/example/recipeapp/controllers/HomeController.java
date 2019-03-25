@@ -1,34 +1,23 @@
 package com.example.recipeapp.controllers;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.recipeapp.domain.Category;
-import com.example.recipeapp.domain.UnitOfMeasure;
-import com.example.recipeapp.repositories.CategoryRepository;
-import com.example.recipeapp.repositories.UnitOfMeasureRepository;
+import com.example.recipeapp.service.RecipeService;
 
 @Controller
 public class HomeController {
 
-    private CategoryRepository categoryRepository;
-    private UnitOfMeasureRepository unitOfMeasureRepository;
+    private final RecipeService recipeService;
 
-    public HomeController(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
-        this.categoryRepository = categoryRepository;
-        this.unitOfMeasureRepository = unitOfMeasureRepository;
+    public HomeController(RecipeService recipeService) {
+        this.recipeService = recipeService;
     }
 
     @GetMapping({"", "/", "index", "index.html"})
     public String getHomePage(Model model) {
-        Optional<Category> category = categoryRepository.findByDescription("American");
-        Optional<UnitOfMeasure> unitOfMeasure = unitOfMeasureRepository.findByDescription("Teaspoon");
-
-        System.out.println("===================> Category Id     : " + category.get().getId());
-        System.out.println("===================> UnitOfMeasure Id: " + unitOfMeasure.get().getId());
+        model.addAttribute("recipes", recipeService.getRecipes());
         return "index";
     }
 }

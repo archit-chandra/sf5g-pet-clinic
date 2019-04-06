@@ -3,6 +3,7 @@ package com.gemalto.petclinic.services.springdatajpa;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.gemalto.petclinic.models.Owner;
@@ -10,6 +11,7 @@ import com.gemalto.petclinic.repositories.OwnerRepository;
 import com.gemalto.petclinic.services.OwnerService;
 
 @Service
+@Profile("springdatajpa")
 public class OwnerSDJpaService implements OwnerService {
 
     private final OwnerRepository ownerRepository;

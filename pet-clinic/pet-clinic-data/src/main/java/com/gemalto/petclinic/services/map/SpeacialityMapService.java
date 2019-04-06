@@ -8,7 +8,7 @@ import com.gemalto.petclinic.models.Speciality;
 import com.gemalto.petclinic.services.SpecialityService;
 
 @Service
-public class SpeacialityServiceMap extends AbstractMapService<Speciality, Long> implements SpecialityService {
+public class SpeacialityMapService extends AbstractMapService<Speciality, Long> implements SpecialityService {
 
     @Override
     public Set<Speciality> findAll() {

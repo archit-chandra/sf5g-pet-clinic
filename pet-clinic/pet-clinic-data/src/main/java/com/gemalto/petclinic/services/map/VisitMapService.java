@@ -2,9 +2,12 @@ package com.gemalto.petclinic.services.map;
 
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import com.gemalto.petclinic.models.Visit;
 import com.gemalto.petclinic.services.VisitService;
 
+@Service
 public class VisitMapService extends AbstractMapService<Visit, Long> implements VisitService {
 
     @Override

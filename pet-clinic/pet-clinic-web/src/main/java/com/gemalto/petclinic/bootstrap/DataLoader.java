@@ -11,10 +11,12 @@ import com.gemalto.petclinic.models.Pet;
 import com.gemalto.petclinic.models.PetType;
 import com.gemalto.petclinic.models.Speciality;
 import com.gemalto.petclinic.models.Vet;
+import com.gemalto.petclinic.models.Visit;
 import com.gemalto.petclinic.services.OwnerService;
 import com.gemalto.petclinic.services.PetTypeService;
 import com.gemalto.petclinic.services.SpecialityService;
 import com.gemalto.petclinic.services.VetService;
+import com.gemalto.petclinic.services.VisitService;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -23,14 +25,16 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
 
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService,
-                      PetTypeService petTypeService, SpecialityService specialityService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService,
+                      SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -84,6 +88,12 @@ public class DataLoader implements CommandLineRunner {
         Pet fionnaPet = new Pet();
         fionnaPet.setName("Jackie");
         addPetsToOwners(owner2, savedCatPetType, fionnaPet);
+
+        Visit catVisit = new Visit();
+        catVisit.setPet(fionnaPet);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Sneezy Kitty");
+        visitService.save(catVisit);
 
         System.out.println("========>>>> Loaded Owners");
 

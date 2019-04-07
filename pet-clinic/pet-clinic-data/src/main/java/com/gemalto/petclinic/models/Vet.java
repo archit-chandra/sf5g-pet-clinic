@@ -20,6 +20,10 @@ public class Vet extends Person {
             inverseJoinColumns = @JoinColumn(name = "speciality"))
     private Set<Speciality> specialities = new HashSet<>();
 
+    public Vet() {
+        super();
+    }
+
     public Vet(String firstName, String lastName) {
         super(firstName, lastName);
     }

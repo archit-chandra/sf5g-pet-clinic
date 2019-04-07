@@ -2,6 +2,7 @@ package com.gemalto.petclinic.services.map;
 
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.gemalto.petclinic.models.Owner;
@@ -11,6 +12,7 @@ import com.gemalto.petclinic.services.PetService;
 import com.gemalto.petclinic.services.PetTypeService;
 
 @Service
+@Profile({"default", "map"})
 public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
 
     private final PetTypeService petTypeService;

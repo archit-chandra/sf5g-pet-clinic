@@ -2,12 +2,14 @@ package com.gemalto.petclinic.services.map;
 
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.gemalto.petclinic.models.Speciality;
 import com.gemalto.petclinic.services.SpecialityService;
 
 @Service
+@Profile({"default", "map"})
 public class SpeacialityMapService extends AbstractMapService<Speciality, Long> implements SpecialityService {
 
     @Override

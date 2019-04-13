@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.recipeapp.service.RecipeService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class HomeController {
 
@@ -17,6 +20,7 @@ public class HomeController {
 
     @GetMapping({"", "/", "index", "index.html"})
     public String getHomePage(Model model) {
+        log.debug("getting index page ...");
         model.addAttribute("recipes", recipeService.getRecipes());
         return "index";
     }

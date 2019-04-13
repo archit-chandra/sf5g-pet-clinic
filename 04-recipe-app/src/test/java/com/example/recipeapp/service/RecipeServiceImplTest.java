@@ -31,13 +31,16 @@ public class RecipeServiceImplTest {
 
     @Test
     public void getRecipes() {
-        Recipe recipe = new Recipe();
-        HashSet<Recipe> recipeData = new HashSet<>();
-        recipeData.add(recipe);
-        when(recipeRepository.findAll()).thenReturn((recipeData));
-
+        when(recipeRepository.findAll()).thenReturn(getRecipesData());
         Set<Recipe> recipes = recipeService.getRecipes();
         assertEquals(recipes.size(), 1);
         verify(recipeRepository, times(1)).findAll();
+    }
+
+    private HashSet<Recipe> getRecipesData() {
+        Recipe recipe = new Recipe();
+        HashSet<Recipe> recipeData = new HashSet<>();
+        recipeData.add(recipe);
+        return recipeData;
     }
 }

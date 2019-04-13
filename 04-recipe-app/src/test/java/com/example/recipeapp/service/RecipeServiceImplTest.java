@@ -1,7 +1,9 @@
 package com.example.recipeapp.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Before;
@@ -27,7 +29,12 @@ public class RecipeServiceImplTest {
 
     @Test
     public void getRecipes() {
+        Recipe recipe = new Recipe();
+        HashSet<Recipe> recipeData = new HashSet<>();
+        recipeData.add(recipe);
+        when(recipeRepository.findAll()).thenReturn((recipeData));
+
         Set<Recipe> recipes = recipeService.getRecipes();
-        assertEquals(recipes.size(), 0);
+        assertEquals(recipes.size(), 1);
     }
 }

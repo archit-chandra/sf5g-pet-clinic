@@ -1,6 +1,8 @@
 package com.example.recipeapp.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.HashSet;
@@ -36,5 +38,6 @@ public class RecipeServiceImplTest {
 
         Set<Recipe> recipes = recipeService.getRecipes();
         assertEquals(recipes.size(), 1);
+        verify(recipeRepository, times(1)).findAll();
     }
 }

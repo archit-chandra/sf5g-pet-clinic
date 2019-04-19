@@ -33,6 +33,7 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
         return super.findById(id);
     }
 
+    // TODO: remove Sonar issues
     @Override
     public Owner save(Owner owner) {
         if (owner != null) {
@@ -44,6 +45,7 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
                             pet.setPetType(petTypeService.save(pet.getPetType()));
                         }
                     } else {
+                        // TODO: throw customized exception
                         throw new RuntimeException("Pet Type is required.");
                     }
 
@@ -72,7 +74,10 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner findByLastName(String lastName) {
-        // TODO: implement findByLastName method in this class or its super class
-        return null;
+        return this.findAll()
+                .stream()
+                .filter(owner -> owner.getLastName().equalsIgnoreCase(lastName))
+                .findFirst()
+                .orElse(null);
     }
 }

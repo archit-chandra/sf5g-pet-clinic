@@ -79,6 +79,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         guacRecipe.getCategories().add(americanCategory);
         guacRecipe.getCategories().add(mexicanCategory);
 
+        guacRecipe.setServings(4);
+        guacRecipe.setUrl("http://www.guac.com");
+
         // Recipe - Tacos
         Recipe tacosRecipe = new Recipe();
         tacosRecipe.setDescription("Sizzling Tacos...");
@@ -95,6 +98,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(5), teaSpoonUom));
 
         tacosRecipe.getCategories().add(mexicanCategory);
+
+        tacosRecipe.setServings(5);
+        tacosRecipe.setUrl("http://www.taco.com");
 
         recipes.add(guacRecipe);
         recipes.add(tacosRecipe);

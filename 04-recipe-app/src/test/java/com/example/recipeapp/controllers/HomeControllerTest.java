@@ -1,6 +1,7 @@
 package com.example.recipeapp.controllers;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -78,5 +79,20 @@ public class HomeControllerTest {
         recipes.add(recipe1);
         recipes.add(recipe2);
         return recipes;
+    }
+
+    private Recipe getRecipe() {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        return recipe;
+    }
+
+    @Test
+    public void getRecipeTest() throws Exception {
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();
+        when(recipeService.findById(anyLong())).thenReturn(getRecipe());
+        mockMvc.perform(get("/recipe/show/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/show"));
     }
 }

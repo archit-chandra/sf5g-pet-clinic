@@ -26,9 +26,9 @@ import org.springframework.ui.Model;
 import com.example.recipeapp.domain.Recipe;
 import com.example.recipeapp.service.RecipeService;
 
-public class HomeControllerTest {
+public class RecipeControllerTest {
 
-    private HomeController homeController;
+    private RecipeController recipeController;
 
     @Mock
     private RecipeService recipeService;
@@ -39,7 +39,7 @@ public class HomeControllerTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        homeController = new HomeController(recipeService);
+        recipeController = new RecipeController(recipeService);
     }
 
     /**
@@ -50,7 +50,7 @@ public class HomeControllerTest {
      */
     @Test
     public void testMockMvc() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"));
@@ -61,7 +61,7 @@ public class HomeControllerTest {
         when(recipeService.getRecipes()).thenReturn(getRecipeData());
         ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 
-        String viewName = homeController.getHomePage(model);
+        String viewName = recipeController.getHomePage(model);
         assertEquals("index", viewName);
         verify(recipeService, times(1)).getRecipes();
         verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
@@ -90,7 +90,7 @@ public class HomeControllerTest {
 
     @Test
     public void getRecipeTest() throws Exception {
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(homeController).build();
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
         when(recipeService.findById(anyLong())).thenReturn(getRecipe());
         mockMvc.perform(get("/recipe/show/1"))
                 .andExpect(status().isOk())

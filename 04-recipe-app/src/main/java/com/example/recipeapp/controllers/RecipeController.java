@@ -5,17 +5,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.example.recipeapp.commands.RecipeCommand;
 import com.example.recipeapp.service.RecipeService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class HomeController {
+public class RecipeController {
 
     private final RecipeService recipeService;
 
-    public HomeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 

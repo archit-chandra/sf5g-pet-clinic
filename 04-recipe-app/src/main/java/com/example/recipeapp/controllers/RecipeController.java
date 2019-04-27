@@ -32,4 +32,10 @@ public class RecipeController {
         model.addAttribute("recipe", recipeService.findById(new Long(id)));
         return "recipe/show";
     }
+
+    @GetMapping("recipe/new")
+    public String newRecipe(Model model) {
+        model.addAttribute("recipe", new RecipeCommand());
+        return "recipe/recipeform";
+    }
 }

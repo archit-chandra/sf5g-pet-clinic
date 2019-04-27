@@ -40,4 +40,10 @@ public class RecipeController {
         model.addAttribute("recipe", new RecipeCommand());
         return "recipe/recipeform";
     }
+
+    @PostMapping("/recipe")
+    public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
+        RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
+        return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
+    }
 }

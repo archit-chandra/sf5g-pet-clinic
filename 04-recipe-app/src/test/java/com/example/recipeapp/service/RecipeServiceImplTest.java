@@ -42,11 +42,12 @@ public class RecipeServiceImplTest {
     }
 
     @Test
-    public void getRecipes() {
+    public void getRecipesTest() {
         when(recipeRepository.findAll()).thenReturn(getRecipesData());
         Set<Recipe> recipes = recipeService.getRecipes();
         assertEquals(1, recipes.size());
         verify(recipeRepository, times(1)).findAll();
+        verify(recipeRepository, never()).findById(anyLong());
     }
 
     private Set<Recipe> getRecipesData() {
@@ -70,5 +71,17 @@ public class RecipeServiceImplTest {
         // default times() = 1, it can be omitted
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
+    public void deleteByIdTest() {
+        // given
+        Long idToDelete = 2L;
+
+        // when
+        recipeService.deleteById(idToDelete);
+
+        // then
+        verify(recipeService, times(1)).deleteById(anyLong());
     }
 }

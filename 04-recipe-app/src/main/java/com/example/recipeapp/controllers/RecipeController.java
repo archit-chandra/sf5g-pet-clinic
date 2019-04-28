@@ -52,4 +52,13 @@ public class RecipeController {
         RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
     }
+
+    // Since this URL is called by a link (always sends HTTP GET request)
+    // and not within a form (where HTTP request can be set), therefore not using @DeleteMapping
+    @GetMapping("/recipe/{id}/delete")
+    public String deleteById(@PathVariable String id) {
+        log.debug("Deleting id:'{}'", id);
+        recipeService.deleteById(Long.valueOf(id));
+        return "redirect:/";
+    }
 }

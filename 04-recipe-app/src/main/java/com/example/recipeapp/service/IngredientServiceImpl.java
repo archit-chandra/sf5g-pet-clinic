@@ -67,7 +67,8 @@ public class IngredientServiceImpl implements IngredientService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getRecipeId());
 
         if(!recipeOptional.isPresent()){
-            //TODO: impl error handling when recipe not found
+            //TODO:
+            // impl error handling when recipe not found
             log.error("Recipe not found for id: " + ingredientCommand.getRecipeId());
             return new IngredientCommand();
         } else {
@@ -84,20 +85,36 @@ public class IngredientServiceImpl implements IngredientService {
                 ingredientFound.setAmount(ingredientCommand.getAmount());
                 ingredientFound.setUom(unitOfMeasureRepository
                         .findById(ingredientCommand.getUom().getId())
-                        // TODO: throw custom exception when UOM not found
+                        // TODO:
+                        //  throw custom exception when UOM not found
                         .orElseThrow(() -> new RuntimeException("UOM NOT FOUND")));
             } else {
                 //add new Ingredient
-                recipe.addIngredient(ingredientCommandToIngredient.convert(ingredientCommand));
+                Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
+                ingredient.setRecipe(recipe);
+                recipe.addIngredient(ingredient);
             }
 
             Recipe savedRecipe = recipeRepository.save(recipe);
 
-            // TODO: check for fail
-            return ingredientToIngredientCommand.convert(savedRecipe.getIngredients().stream()
+            Optional<Ingredient> savedIngredientOptional = savedRecipe.getIngredients().stream()
                     .filter(recipeIngredients -> recipeIngredients.getId().equals(ingredientCommand.getId()))
-                    .findFirst()
-                    .get());
+                    .findFirst();
+
+            // check by description
+            if(!savedIngredientOptional.isPresent()){
+                // not totally safe... But best guess
+                // could add duplicate ingredient by this way
+                savedIngredientOptional = savedRecipe.getIngredients().stream()
+                        .filter(recipeIngredients -> recipeIngredients.getDescription().equals(ingredientCommand.getDescription()))
+                        .filter(recipeIngredients -> recipeIngredients.getAmount().equals(ingredientCommand.getAmount()))
+                        .filter(recipeIngredients -> recipeIngredients.getUom().getId().equals(ingredientCommand.getUom().getId()))
+                        .findFirst();
+            }
+
+            // TODO:
+            //  check for fail
+            return ingredientToIngredientCommand.convert(savedIngredientOptional.get());
         }
 
     }

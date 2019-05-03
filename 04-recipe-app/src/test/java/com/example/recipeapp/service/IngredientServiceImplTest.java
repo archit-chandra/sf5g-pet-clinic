@@ -88,9 +88,9 @@ public class IngredientServiceImplTest {
     @Test
     public void testSaveIngredientCommand() throws Exception {
         //given
-        IngredientCommand command = new IngredientCommand();
-        command.setId(3L);
-        command.setRecipeId(2L);
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setId(3L);
+        ingredientCommand.setRecipeId(2L);
 
         Optional<Recipe> recipeOptional = Optional.of(new Recipe());
 
@@ -102,12 +102,16 @@ public class IngredientServiceImplTest {
         when(recipeRepository.save(any())).thenReturn(savedRecipe);
 
         //when
-        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
+        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(ingredientCommand);
 
         //then
         assertEquals(Long.valueOf(3L), savedCommand.getId());
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, times(1)).save(any(Recipe.class));
     }
+
+    // TODO:
+    //  1. add test to cover add new ingredient (i.e. ingredientCommand.getId() == null)
+    //  2. add test to cover add update ingredient (i.e. ingredientCommand.getId() != null, but some changed attribute)
 
 }

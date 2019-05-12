@@ -38,11 +38,11 @@ public class OwnerController {
         webDataBinder.setDisallowedFields("id");
     }
 
-    @GetMapping({"", "/", "/index", "/index.html"})
+    /*@GetMapping({"", "/", "/index", "/index.html"})
     public String listOwners(Model model) {
         model.addAttribute("owners", ownerService.findAll());
         return "owners/index";
-    }
+    }*/
 
     @GetMapping("/find")
     public String findOwners(Model model) {

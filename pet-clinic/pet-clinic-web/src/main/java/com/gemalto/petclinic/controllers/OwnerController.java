@@ -37,8 +37,9 @@ public class OwnerController {
      */
     @InitBinder
     public void setAllowedFields(WebDataBinder webDataBinder) {
-        // disallowing form data to manipulate with ids in the java object, as it drives everything in DB,
-        // therefore, controlling the automatic binding for security purpose
+        // NOTES:
+        //  disallowing form data to manipulate with ids in the java object, as it drives everything in DB,
+        //  therefore, controlling the automatic binding for security purpose
         webDataBinder.setDisallowedFields("id");
     }
 
@@ -114,7 +115,8 @@ public class OwnerController {
         if (result.hasErrors()) {
             return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
         } else {
-            // setting ownerId explicitly because web data binder (@InitBinder) prevents that for security reason
+            // NOTES:
+            //  setting ownerId explicitly because web data binder (@InitBinder) prevents that for security reason
             owner.setId(ownerId);
             Owner savedOwner = ownerService.save(owner);
             return "redirect:/owners/" + savedOwner.getId();

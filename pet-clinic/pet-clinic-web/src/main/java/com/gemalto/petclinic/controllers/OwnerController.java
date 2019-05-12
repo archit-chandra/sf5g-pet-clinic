@@ -2,6 +2,8 @@ package com.gemalto.petclinic.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +23,7 @@ import com.gemalto.petclinic.services.OwnerService;
 @RequestMapping("/owners")
 public class OwnerController {
 
+    private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private final OwnerService ownerService;
 
     @Autowired
@@ -38,11 +42,19 @@ public class OwnerController {
         webDataBinder.setDisallowedFields("id");
     }
 
+    // Only meant for initial project purposes
     /*@GetMapping({"", "/", "/index", "/index.html"})
     public String listOwners(Model model) {
         model.addAttribute("owners", ownerService.findAll());
         return "owners/index";
     }*/
+
+    @GetMapping("/{ownerId}")
+    public ModelAndView displayOwner(@PathVariable("ownerId") Long ownerId) {
+        ModelAndView mav = new ModelAndView("owners/ownerDetails");
+        mav.addObject(ownerService.findById(ownerId));
+        return mav;
+    }
 
     @GetMapping("/find")
     public String findOwners(Model model) {

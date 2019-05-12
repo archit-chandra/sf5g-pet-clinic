@@ -21,6 +21,17 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
+    /**
+     * @param webDataBinder- to have more control over the Spring automatic data binding
+     *                       from the form post to java object
+     */
+    @InitBinder
+    public void setAllowedFields(WebDataBinder webDataBinder) {
+        // disallowing form data to manipulate with ids in the java object, as it drives everything in DB,
+        // therefore, controlling the automatic binding for security purpose
+        webDataBinder.setDisallowedFields("id");
+    }
+
     @GetMapping({"", "/", "/index", "/index.html"})
     public String listOwners(Model model) {
         model.addAttribute("owners", ownerService.findAll());

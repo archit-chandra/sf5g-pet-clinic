@@ -11,6 +11,7 @@ import com.example.recipeapp.commands.RecipeCommand;
 import com.example.recipeapp.converters.RecipeCommandToRecipe;
 import com.example.recipeapp.converters.RecipeToRecipeCommand;
 import com.example.recipeapp.domain.Recipe;
+import com.example.recipeapp.exceptions.NotFoundException;
 import com.example.recipeapp.repositories.RecipeRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,12 +38,11 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeSet;
     }
 
-    // TODO: throw customized exception
     @Override
     public Recipe findById(Long id) {
         Optional<Recipe> optionalRecipe = recipeRepository.findById(id);
         if (!optionalRecipe.isPresent()) {
-            throw new RuntimeException("Recipe not found for id = " + id);
+            throw new NotFoundException("Recipe not found for id = " + id);
         }
         return optionalRecipe.get();
     }

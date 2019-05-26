@@ -56,6 +56,9 @@ public class VisitController {
     @ModelAttribute("visit")
     public Visit loadPetWithVisit(@PathVariable("petId") Long petId, Map<String, Object> model) {
         Pet pet = petService.findById(petId);
+        // NOTES:
+        //  1. Why model is is used here?
+        //  2. Why put pet inside this model?
         model.put("pet", pet);
         Visit visit = new Visit();
         pet.getVisits().add(visit);
@@ -76,7 +79,6 @@ public class VisitController {
             return "pets/createOrUpdateVisitForm";
         } else {
             visitService.save(visit);
-
             return "redirect:/owners/{ownerId}";
         }
     }

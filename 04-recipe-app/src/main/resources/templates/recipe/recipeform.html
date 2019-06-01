@@ -136,11 +136,23 @@
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label>Source:</label>
-                                            <input type="text" class="form-control" th:field="*{source}"/>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   th:field="*{source}"/>
                                         </div>
-                                        <div class="col-md-3 form-group">
+                                        <div class="col-md-3 form-group"
+                                             th:class="${#fields.hasErrors('url')}
+                                             ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                             <label>URL:</label>
-                                            <input type="text" class="form-control" th:field="*{url}"/>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   th:field="*{url}"
+                                                   th:errorclass="has-error"/>
+                                            <span class="help-block" th:if="${#fields.hasErrors('url')}">
+                                                <ul>
+                                                    <li th:each="err : ${#fields.errors('url')}" th:text="${err}"></li>
+                                                </ul>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -152,7 +164,8 @@
                                             <h1 class="panel-title">Ingredients</h1>
                                         </div>
                                         <div class="col-md-1">
-                                            <a class="btn btn-default" href="#" role="button">Edit</a>
+                                            <a class="btn btn-default" href="#"
+                                               th:href="@{'/recipe/' + ${recipe.id} + '/ingredients'}" role="button">View</a>
                                         </div>
                                     </div>
                                 </div>

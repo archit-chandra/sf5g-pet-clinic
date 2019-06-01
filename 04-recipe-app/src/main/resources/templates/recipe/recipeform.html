@@ -87,17 +87,28 @@
                                                 </ul>
                                             </span>
                                         </div>
-                                        <div class="col-md-3 form-group">
+                                        <div class="col-md-3 form-group"
+                                             th:class="${#fields.hasErrors('cookTime')}
+                                             ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                             <label>Cooktime:</label>
-                                            <input type="text" class="form-control" th:field="*{cookTime}"/>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   th:field="*{cookTime}"
+                                                   th:errorclass="has-error"/>
+                                            <span class="help-block" th:if="${#fields.hasErrors('cookTime')}">
+                                                <ul>
+                                                    <li th:each="err : ${#fields.errors('cookTime')}"
+                                                        th:text="${err}"></li>
+                                                </ul>
+                                            </span>
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label>Difficulty:</label>
                                             <select class="form-control" th:field="*{difficulty}">
                                                 <option th:each="difficultyValue : ${T(com.example.recipeapp.domain.Difficulty).values()}"
                                                         th:value="${difficultyValue.name()}"
-                                                        th:text="${difficultyValue.name()}"
-                                                >val
+                                                        th:text="${difficultyValue.name()}">
+                                                    val
                                                 </option>
                                             </select>
                                             <select class="form-control" th:remove="all">

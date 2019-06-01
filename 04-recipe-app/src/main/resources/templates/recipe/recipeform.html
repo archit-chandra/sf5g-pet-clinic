@@ -119,9 +119,20 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-3 form-group">
+                                        <div class="col-md-3 form-group"
+                                             th:class="${#fields.hasErrors('servings')}
+                                             ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                             <label>Servings:</label>
-                                            <input type="text" class="form-control" th:field="*{servings}"/>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   th:field="*{servings}"
+                                                   th:errorclass="has-error"/>
+                                            <span class="help-block" th:if="${#fields.hasErrors('servings')}">
+                                                <ul>
+                                                    <li th:each="err : ${#fields.errors('servings')}"
+                                                        th:text="${err}"></li>
+                                                </ul>
+                                            </span>
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label>Source:</label>

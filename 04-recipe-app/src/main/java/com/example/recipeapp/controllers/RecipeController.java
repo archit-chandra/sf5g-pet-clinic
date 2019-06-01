@@ -1,8 +1,11 @@
 package com.example.recipeapp.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +28,7 @@ public class RecipeController {
 
     private final RecipeService recipeService;
     private static final String MODEL_NAME = "recipe";
+    private static final String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
 
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
@@ -49,7 +53,14 @@ public class RecipeController {
     }
 
     @PostMapping("")
-    public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(objectError -> {
+                log.error(objectError.toString());
+            });
+            return RECIPE_RECIPEFORM_URL;
+        }
         RecipeCommand savedRecipeCommand = recipeService.saveRecipeCommand(recipeCommand);
         return "redirect:/recipe/" + savedRecipeCommand.getId() + "/show";
     }

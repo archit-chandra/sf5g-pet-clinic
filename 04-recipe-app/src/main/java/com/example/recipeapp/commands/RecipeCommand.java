@@ -3,6 +3,13 @@ package com.example.recipeapp.commands;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
+
 import com.example.recipeapp.domain.Difficulty;
 
 import lombok.Getter;
@@ -15,12 +22,31 @@ import lombok.Setter;
 public class RecipeCommand {
 
     private Long id;
+
+    @NotBlank
+    @Size(min = 3, max = 255)
     private String description;
+
+    @Min(1)
+    @Max(999)
     private Integer prepTime;
+
+    @Min(1)
+    @Max(999)
     private Integer cookTime;
+
+    @Min(1)
+    @Max(100)
     private Integer servings;
     private String source;
+
+    // NOTES: @URL constraint
+    //  It will allow blank values.
+    //  Use @NotBlank, when required
+    @URL
     private String url;
+
+    @NotBlank
     private String directions;
     private Set<IngredientCommand> ingredients = new HashSet<>();
     private Byte[] image;

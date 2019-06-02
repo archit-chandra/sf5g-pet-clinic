@@ -1,5 +1,7 @@
 package com.gemalto.petclinic.controllers;
 
+import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -33,13 +35,15 @@ public class VisitController {
     public void dataBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
 
-        // to be uncommented later in other task
-        /*dataBinder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
+        // NOTES: @InitBinder
+        //  1. registered custom editor with WebDataBinder
+        //  2. parsed String to LocalDate, when expecting LocalDate but String is provided
+        dataBinder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
             @Override
             public void setAsText(String text) throws IllegalArgumentException {
                 setValue(LocalDate.parse(text));
             }
-        });*/
+        });
     }
 
     /**

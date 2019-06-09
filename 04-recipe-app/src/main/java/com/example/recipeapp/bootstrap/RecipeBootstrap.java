@@ -50,7 +50,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         // get UOMs
         UnitOfMeasure eachUom = findAndValidateUomByDescription("Each");
         UnitOfMeasure tableSpoonUom = findAndValidateUomByDescription("Tablespoon");
-        UnitOfMeasure teaSpoonUom = findAndValidateUomByDescription("Tablespoon");
+        UnitOfMeasure teaSpoonUom = findAndValidateUomByDescription("Teaspoon");
         UnitOfMeasure dashUom = findAndValidateUomByDescription("Dash");
         UnitOfMeasure pintUom = findAndValidateUomByDescription("Pint");
         UnitOfMeasure cupUom = findAndValidateUomByDescription("Cup");

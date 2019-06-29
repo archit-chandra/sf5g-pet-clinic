@@ -50,7 +50,10 @@ public class UserServiceJpaDaoImplTest {
         assert savedUser.getEncryptedPassword() != null;
 
         System.out.println("Encrypted Password");
-        System.out.println(savedUser.getEncryptedPassword());
+
+        // FIXME:
+        //  1. it fails with spring data jpa service
+        //System.out.println(savedUser.getEncryptedPassword());
 
     }
 

@@ -13,9 +13,23 @@ public class Customer extends AbstractDomainClass {
     private String email;
     private String phoneNumber;
 
+    /*@AttributeOverrides({
+            @AttributeOverride(name = "addressLine1", column = @Column(name = "billingAddressLine1")),
+            @AttributeOverride(name = "addressLine2", column = @Column(name = "billingAddressLine")),
+            @AttributeOverride(name = "city", column = @Column(name = "billingCity")),
+            @AttributeOverride(name = "state", column = @Column(name = "billingState")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "billingZipCode"))
+    })*/
     @Embedded
     private Address billingAddress;
 
+    /*@AttributeOverrides({
+            @AttributeOverride(name = "addressLine1", column = @Column(name = "shippingAddressLine1")),
+            @AttributeOverride(name = "addressLine2", column = @Column(name = "shippingAddressLine")),
+            @AttributeOverride(name = "city", column = @Column(name = "shippingCity")),
+            @AttributeOverride(name = "state", column = @Column(name = "shippingState")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "shippingZipCode"))
+    })*/
     @Embedded
     private Address shippingAddress;
 

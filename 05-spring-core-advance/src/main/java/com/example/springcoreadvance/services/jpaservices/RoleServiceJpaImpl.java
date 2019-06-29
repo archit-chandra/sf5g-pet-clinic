@@ -11,7 +11,7 @@ import com.example.springcoreadvance.domain.security.Role;
 import com.example.springcoreadvance.services.RoleService;
 
 @Service
-@Profile("jpadao")
+@Profile("jpadao-dont-use")
 public class RoleServiceJpaImpl extends AbstractJpaDaoService implements RoleService {
 
     @Override

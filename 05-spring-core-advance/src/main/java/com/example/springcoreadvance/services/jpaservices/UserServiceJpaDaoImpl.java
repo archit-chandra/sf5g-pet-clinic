@@ -13,7 +13,7 @@ import com.example.springcoreadvance.services.UserService;
 import com.example.springcoreadvance.services.security.EncryptionService;
 
 @Service
-@Profile("jpadao")
+@Profile("jpadao-dont-use")
 public class UserServiceJpaDaoImpl extends AbstractJpaDaoService implements UserService {
 
     private EncryptionService encryptionService;

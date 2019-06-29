@@ -11,7 +11,7 @@ import com.example.springcoreadvance.domain.Order;
 import com.example.springcoreadvance.services.OrderService;
 
 @Service
-@Profile("jpadao")
+@Profile("jpadao-dont-use")
 public class OrderServiceJpaDaoImpl extends AbstractJpaDaoService implements OrderService {
 
     @Override

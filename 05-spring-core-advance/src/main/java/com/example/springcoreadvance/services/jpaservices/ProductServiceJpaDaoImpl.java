@@ -4,15 +4,25 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.example.springcoreadvance.commands.ProductForm;
+import com.example.springcoreadvance.converters.ProductFormToProduct;
 import com.example.springcoreadvance.domain.Product;
 import com.example.springcoreadvance.services.ProductService;
 
 @Service
-@Profile("jpadao-dont-use")
+@Profile("jpadao")
 public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements ProductService {
+
+    private ProductFormToProduct productFormToProduct;
+
+    @Autowired
+    public void setProductFormToProduct(ProductFormToProduct productFormToProduct) {
+        this.productFormToProduct = productFormToProduct;
+    }
 
     @Override
     public List<Product> listAll() {
@@ -37,6 +47,11 @@ public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements P
         em.getTransaction().commit();
 
         return savedProduct;
+    }
+
+    @Override
+    public Product saveOrUpdateProductForm(ProductForm productForm) {
+        return saveOrUpdate(productFormToProduct.convert(productForm));
     }
 
     @Override

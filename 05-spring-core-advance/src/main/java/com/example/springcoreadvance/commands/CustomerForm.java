@@ -1,6 +1,8 @@
 package com.example.springcoreadvance.commands;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class CustomerForm {
 
@@ -10,11 +12,15 @@ public class CustomerForm {
     private Integer customerVersion;
 
     @NotEmpty(message = "usename must not be empty.")
+    @Size(min = 2)
     private String userName;
     private String passwordText;
     private String passwordTextConf;
     private String firstName;
     private String lastName;
+
+    @NotEmpty
+    @Email
     private String email;
     private String phoneNumber;
 

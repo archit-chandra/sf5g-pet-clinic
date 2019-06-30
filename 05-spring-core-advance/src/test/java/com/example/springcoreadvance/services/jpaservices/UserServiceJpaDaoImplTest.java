@@ -19,7 +19,6 @@ import com.example.springcoreadvance.services.ProductService;
 import com.example.springcoreadvance.services.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(JpaIntegrationConfig.class)
 @SpringBootTest(classes = JpaIntegrationConfig.class)
 @ActiveProfiles("jpadao")
 public class UserServiceJpaDaoImplTest {
@@ -50,10 +49,7 @@ public class UserServiceJpaDaoImplTest {
         assert savedUser.getEncryptedPassword() != null;
 
         System.out.println("Encrypted Password");
-
-        // FIXME:
-        //  1. it fails with spring data jpa service
-        //System.out.println(savedUser.getEncryptedPassword());
+        System.out.println(savedUser.getEncryptedPassword());
 
     }
 

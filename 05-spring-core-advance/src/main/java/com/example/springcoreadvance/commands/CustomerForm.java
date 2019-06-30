@@ -1,11 +1,15 @@
 package com.example.springcoreadvance.commands;
 
+import javax.validation.constraints.NotEmpty;
+
 public class CustomerForm {
 
     private Integer userId;
     private Integer userVersion;
     private Integer customerId;
     private Integer customerVersion;
+
+    @NotEmpty(message = "usename must not be empty.")
     private String userName;
     private String passwordText;
     private String passwordTextConf;

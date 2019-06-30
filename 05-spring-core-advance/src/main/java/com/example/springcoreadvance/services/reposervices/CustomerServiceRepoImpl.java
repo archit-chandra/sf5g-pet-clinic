@@ -6,19 +6,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.springcoreadvance.commands.CustomerForm;
 import com.example.springcoreadvance.converters.CustomerFormToCustomer;
 import com.example.springcoreadvance.domain.Customer;
 import com.example.springcoreadvance.repositories.CustomerRepository;
+import com.example.springcoreadvance.repositories.UserRepository;
 import com.example.springcoreadvance.services.CustomerService;
 
 @Service
 @Profile({"springdatajpa", "jpadao"})
 public class CustomerServiceRepoImpl implements CustomerService {
 
+    private UserRepository userRepository;
     private CustomerRepository customerRepository;
     private CustomerFormToCustomer customerFormToCustomer;
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Autowired
     public void setCustomerRepository(CustomerRepository customerRepository) {
@@ -60,7 +68,15 @@ public class CustomerServiceRepoImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
+    // NOTES: @Transactional
+    //  1. If not used, then each repository calls will be handled in different transactions
+    //  2. Now, both below calls to userRepository, customerRepository will be in single transaction
     public void delete(Integer id) {
-        customerRepository.deleteById(id);
+        Customer customer = customerRepository.findById(id).orElse(null);
+        if (customer != null) {
+            userRepository.delete(customer.getUser());
+            customerRepository.delete(customer);
+        }
     }
 }

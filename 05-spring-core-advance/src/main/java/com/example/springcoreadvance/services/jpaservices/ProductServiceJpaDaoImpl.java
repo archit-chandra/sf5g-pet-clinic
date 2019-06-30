@@ -14,7 +14,7 @@ import com.example.springcoreadvance.domain.Product;
 import com.example.springcoreadvance.services.ProductService;
 
 @Service
-@Profile("jpadao")
+@Profile("jpadao-dont-use")
 public class ProductServiceJpaDaoImpl extends AbstractJpaDaoService implements ProductService {
 
     private ProductFormToProduct productFormToProduct;

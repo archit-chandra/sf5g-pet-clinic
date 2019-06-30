@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.example.springcoreadvance.commands.CustomerForm;
+import com.example.springcoreadvance.converters.CustomerFormToCustomer;
 import com.example.springcoreadvance.domain.Customer;
 import com.example.springcoreadvance.repositories.CustomerRepository;
 import com.example.springcoreadvance.services.CustomerService;
@@ -16,10 +18,16 @@ import com.example.springcoreadvance.services.CustomerService;
 public class CustomerServiceRepoImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
+    private CustomerFormToCustomer customerFormToCustomer;
 
     @Autowired
     public void setCustomerRepository(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
+    }
+
+    @Autowired
+    public void setCustomerFormToCustomer(CustomerFormToCustomer customerFormToCustomer) {
+        this.customerFormToCustomer = customerFormToCustomer;
     }
 
     @Override
@@ -37,6 +45,18 @@ public class CustomerServiceRepoImpl implements CustomerService {
     @Override
     public Customer saveOrUpdate(Customer domainObject) {
         return customerRepository.save(domainObject);
+    }
+
+    @Override
+    public Customer saveOrUpdateCustomerForm(CustomerForm customerForm) {
+        Customer newCustomer = customerFormToCustomer.convert(customerForm);
+
+        if (newCustomer != null && newCustomer.getUser().getId() != null) {
+            Customer existingCustomer = getById(newCustomer.getId());
+            newCustomer.getUser().setEnabled(existingCustomer.getUser().getEnabled());
+        }
+
+        return saveOrUpdate(newCustomer);
     }
 
     @Override

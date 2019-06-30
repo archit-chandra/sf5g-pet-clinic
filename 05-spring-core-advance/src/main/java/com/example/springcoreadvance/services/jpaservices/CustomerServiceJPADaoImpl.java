@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.example.springcoreadvance.commands.CustomerForm;
+import com.example.springcoreadvance.converters.CustomerFormToCustomer;
 import com.example.springcoreadvance.domain.Customer;
 import com.example.springcoreadvance.services.CustomerService;
 import com.example.springcoreadvance.services.security.EncryptionService;
@@ -17,10 +19,16 @@ import com.example.springcoreadvance.services.security.EncryptionService;
 public class CustomerServiceJPADaoImpl extends AbstractJpaDaoService implements CustomerService {
 
     private EncryptionService encryptionService;
+    private CustomerFormToCustomer customerFormToCustomer;
 
     @Autowired
     public void setEncryptionService(EncryptionService encryptionService) {
         this.encryptionService = encryptionService;
+    }
+
+    @Autowired
+    public void setCustomerFormToCustomer(CustomerFormToCustomer customerFormToCustomer) {
+        this.customerFormToCustomer = customerFormToCustomer;
     }
 
     @Override
@@ -52,6 +60,21 @@ public class CustomerServiceJPADaoImpl extends AbstractJpaDaoService implements 
         em.getTransaction().commit();
 
         return savedCustomer;
+    }
+
+    @Override
+    public Customer saveOrUpdateCustomerForm(CustomerForm customerForm) {
+        Customer newCustomer = customerFormToCustomer.convert(customerForm);
+
+        //enhance if saved
+        if (newCustomer.getUser().getId() != null) {
+            Customer existingCustomer = getById(newCustomer.getUser().getId());
+
+            //set enabled flag from db
+            newCustomer.getUser().setEnabled(existingCustomer.getUser().getEnabled());
+        }
+
+        return saveOrUpdate(newCustomer);
     }
 
     @Override

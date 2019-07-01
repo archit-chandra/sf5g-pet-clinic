@@ -67,11 +67,16 @@
             <version>2.1.4</version>
         </dependency>
 
-        <!--NOTES: Find the usage-->
-        <!--encryption lib-->
+        <!--encryption lib (one way encryption)-->
         <dependency>
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt-springsecurity3</artifactId>
             <version>1.9.2</version>
         </dependency>
 

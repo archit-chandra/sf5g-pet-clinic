@@ -52,11 +52,11 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         loadOrderHistory();
         loadRoles();
         assignUsersToDefaultRole();
+        assignUsersToAdminRole();
 
     }
 
     private void assignUsersToDefaultRole() {
-        // FIXME: remove unchecked casting
         List<Role> roles = (List<Role>) roleService.listAll();
         List<User> users = (List<User>) userService.listAll();
 
@@ -67,13 +67,45 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
                     userService.saveOrUpdate(user);
                 });
             }
+
+            // NOTES: avoiding ObjectOptimisticLockingFailureException
+            //  because user row was updated or deleted by another transaction
+//            if (role.getRole().equalsIgnoreCase("ADMIN")) {
+//                users.forEach(user -> {
+//                    if (user.getUsername().equals("fglenanne")) {
+//                        user.addRole(role);
+//                        userService.saveOrUpdate(user);
+//                    }
+//                });
+//            }
         });
     }
+
+    private void assignUsersToAdminRole() {
+        List<Role> roles = (List<Role>) roleService.listAll();
+        List<User> users = (List<User>) userService.listAll();
+
+        roles.forEach(role -> {
+            if (role.getRole().equalsIgnoreCase("ADMIN")) {
+                users.forEach(user -> {
+                    if (user.getUsername().equals("fglenanne")) {
+                        user.addRole(role);
+                        userService.saveOrUpdate(user);
+                    }
+                });
+            }
+        });
+    }
+
 
     private void loadRoles() {
         Role role = new Role();
         role.setRole("CUSTOMER");
         roleService.saveOrUpdate(role);
+
+        Role adminRole = new Role();
+        adminRole.setRole("ADMIN");
+        roleService.saveOrUpdate(adminRole);
     }
 
     private void loadOrderHistory() {
@@ -108,7 +140,7 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         });
     }
 
-    public void loadUsersAndCustomers() {
+    private void loadUsersAndCustomers() {
         User user1 = new User();
         user1.setUsername("mweston");
         user1.setPassword("password");
@@ -161,7 +193,7 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         userService.saveOrUpdate(user3);
     }
 
-    public void loadProducts() {
+    private void loadProducts() {
 
         Product product1 = new Product();
         product1.setDescription("Product 1");
@@ -192,6 +224,5 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         product5.setPrice(new BigDecimal("25.99"));
         product5.setImageUrl("http://example.com/product5");
         productService.saveOrUpdate(product5);
-
     }
 }

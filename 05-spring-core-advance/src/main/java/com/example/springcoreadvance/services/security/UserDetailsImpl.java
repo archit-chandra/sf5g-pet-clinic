@@ -11,7 +11,7 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<SimpleGrantedAuthority> authorities;
     private String username;
     private String password;
-    private Boolean enabled;
+    private Boolean enabled = Boolean.FALSE;
 
     public void setAuthorities(Collection<SimpleGrantedAuthority> authorities) {
         this.authorities = authorities;

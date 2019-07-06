@@ -46,11 +46,12 @@ public class SpringSecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // NOTES: resolving issues when using h2 data only
-        //  1. to see the h2-console
-        //  2.ignoring when using h2 database.
+        //  1. ignoring h2-console headers frame options
+        //  2.ignoring csrf for h2 database.
         http.headers().frameOptions().disable();
         http.csrf().ignoringAntMatchers("/h2-console").disable()
                 .authorizeRequests().antMatchers("/**/favicon.ico").permitAll()
+                .and().authorizeRequests().antMatchers("/h2-console/**").permitAll()
                 .and().authorizeRequests().antMatchers("/product/**").permitAll()
                 .and().authorizeRequests().antMatchers("/webjars/**").permitAll()
                 .and().authorizeRequests().antMatchers("/static/css").permitAll()

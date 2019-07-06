@@ -12,6 +12,7 @@ import com.example.springcoreadvance.converters.ProductFormToProduct;
 import com.example.springcoreadvance.domain.Product;
 import com.example.springcoreadvance.repositories.ProductRepository;
 import com.example.springcoreadvance.services.ProductService;
+import com.example.springcoreadvance.services.SendTextMessageService;
 
 @Service
 @Profile({"springdatajpa", "jpadao"})
@@ -19,6 +20,7 @@ public class ProductServiceRepoImpl implements ProductService {
 
     private ProductRepository productRepository;
     private ProductFormToProduct productFormToProduct;
+    private SendTextMessageService sendTextMessageService;
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
@@ -30,8 +32,15 @@ public class ProductServiceRepoImpl implements ProductService {
         this.productFormToProduct = productFormToProduct;
     }
 
+    @Autowired
+    public void setSendTextMessageService(SendTextMessageService sendTextMessageService) {
+        this.sendTextMessageService = sendTextMessageService;
+    }
+
     @Override
     public List<?> listAll() {
+        sendTextMessageService.sendTextMessage("Listing Products");
+
         List<Product> products = new ArrayList<>();
         productRepository.findAll().forEach(products::add);
         return products;
@@ -39,6 +48,7 @@ public class ProductServiceRepoImpl implements ProductService {
 
     @Override
     public Product getById(Integer id) {
+        sendTextMessageService.sendTextMessage("Requested Product ID: " + id);
         return productRepository.findById(id).orElse(null);
     }
 
